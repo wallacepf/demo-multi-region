@@ -24,7 +24,7 @@ resource "aws_subnet" "staging" {
   }
 }
 
-resource "aws_subnet" "production" {
+resource "aws_subnet" "producction" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.subnet_prod
 
