@@ -38,14 +38,14 @@ module "security_group_ec2" {
   version = "~>3.0"
 
   name   = "ec2"
-  vpc_id = aws_vpc.vpc_id
+  vpc_id = aws_vpc.main.id
   ingress_with_cidr_blocks = [
     {
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
       description = "SSH Access to EC2 instance"
-      cidr_blocks = aws_vpc.cidr_block
+      cidr_blocks = aws_vpc.main.cidr_block
     }
   ]
   egress_rules = ["all-all"]
