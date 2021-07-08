@@ -5,8 +5,6 @@ variable "subnet_staging" {}
 variable "subnet_prod" {}
 variable "inst_size" {}
 variable "inst_key_name" {}
-variable "inst_sec_group_id" {}
-variable "inst_subnet_id" {}
 variable "inst_name" {}
 
 variable "inst_ami" {
