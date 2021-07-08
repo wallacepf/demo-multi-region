@@ -2,25 +2,24 @@ provider "aws" {
   region     = var.aws_region
 }
 
-data "aws_ami" "inst_ami" {
+data "aws_ami" "amazon_linux" {
   most_recent = true
-  owners      = ["099720109477"]
 
   filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/*ubuntu-focal-20.04-amd64-server-*"]
+    name = "name"
+
+    values = [
+      "amzn-ami-hvm-*-x86_64-gp2",
+    ]
   }
 
   filter {
-    name   = "root-device-type"
-    values = ["ebs"]
-  }
+    name = "owner-alias"
 
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
+    values = [
+      "amazon",
+    ]
   }
-
 }
 
 resource "aws_vpc" "main" {
@@ -77,7 +76,7 @@ module "demo-ec2-module" {
   source  = "app.terraform.io/my-demo-account/demo-ec2-module/aws"
   version = "1.0.5"
   
-  inst_ami = data.aws_ami.inst_ami.id
+  inst_ami = data.aws_ami.amazon_linux.id
   inst_name = var.inst_name
   inst_size = var.inst_size
   inst_key_name = var.inst_name
