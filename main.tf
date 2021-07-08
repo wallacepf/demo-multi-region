@@ -54,7 +54,7 @@ resource "aws_security_group" "inst_default_rules" {
 
 module "demo-ec2-module" {
   source  = "app.terraform.io/my-demo-account/demo-ec2-module/aws"
-  version = "1.0.4"
+  version = "1.0.5"
   
   inst_name = var.inst_name
   inst_size = var.inst_size
