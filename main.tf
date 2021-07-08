@@ -33,23 +33,23 @@ resource "aws_subnet" "production" {
   }
 }
 
-module "security_group_ec2" {
-  source  = "terraform-aws-modules/security-group/aws"
-  version = "~>3.0"
+resource "aws_security_group" "inst_default_rules" {
+  name        = "allow_ssh"
+  vpc_id      = aws_vpc.main.id
 
-  name   = "ec2"
-  vpc_id = aws_vpc.main.id
-  ingress_with_cidr_blocks = [
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      description = "SSH Access to EC2 instance"
-      cidr_blocks = aws_vpc.main.cidr_block
-    }
-  ]
-  egress_rules = ["all-all"]
-  tags         = var.inst_common_tags
+  ingress {
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = [aws_vpc.main.cidr_block]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
 }
 
 module "demo-ec2-module" {
@@ -59,7 +59,7 @@ module "demo-ec2-module" {
   inst_name = var.inst_name
   inst_size = var.inst_size
   inst_key_name = var.inst_name
-  inst_sec_group_id = [module.security_group_ec2.security_group_id]
+  inst_sec_group_id = aws_security_group.inst_default_rules
   inst_subnet_id = aws_subnet.development.id
   inst_common_tags = var.inst_common_tags
 }
