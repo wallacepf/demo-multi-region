@@ -24,11 +24,42 @@ resource "aws_subnet" "staging" {
   }
 }
 
-resource "aws_subnet" "producction" {
+resource "aws_subnet" "production" {
   vpc_id     = aws_vpc.main.id
   cidr_block = var.subnet_prod
 
   tags = {
     Name = "production"
   }
+}
+
+module "security_group_ec2" {
+  source  = "terraform-aws-modules/security-group/aws"
+  version = "~>3.0"
+
+  name   = "ec2"
+  vpc_id = aws_vpc.vpc_id
+  ingress_with_cidr_blocks = [
+    {
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      description = "SSH Access to EC2 instance"
+      cidr_blocks = aws_vpc.cidr_block
+    }
+  ]
+  egress_rules = ["all-all"]
+  tags         = var.common_tags
+}
+
+module "demo-ec2-module" {
+  source  = "app.terraform.io/my-demo-account/demo-ec2-module/aws"
+  version = "1.0.1"
+  
+  inst_name = var.inst_name
+  inst_size = var.inst_size
+  inst_key_name = var.inst_name
+  inst_sec_group_id = module.security_group_ec2.id
+  inst_subnet_id = aws_subnet.development.id
+
 }
