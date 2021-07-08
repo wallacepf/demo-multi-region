@@ -54,7 +54,7 @@ module "security_group_ec2" {
 
 module "demo-ec2-module" {
   source  = "app.terraform.io/my-demo-account/demo-ec2-module/aws"
-  version = "1.0.2"
+  version = "1.0.3"
   
   inst_name = var.inst_name
   inst_size = var.inst_size
