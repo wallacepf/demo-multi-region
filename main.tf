@@ -49,7 +49,7 @@ module "security_group_ec2" {
     }
   ]
   egress_rules = ["all-all"]
-  tags         = var.common_tags
+  tags         = var.inst_common_tags
 }
 
 module "demo-ec2-module" {
