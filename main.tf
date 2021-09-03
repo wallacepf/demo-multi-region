@@ -85,3 +85,7 @@ module "demo-ec2-module" {
   inst_subnet_id = aws_subnet.development.id
   inst_common_tags = var.inst_common_tags
 }
+
+resource "null_resource" "demo" {
+
+}
