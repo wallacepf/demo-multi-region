@@ -1,6 +1,6 @@
 variable "aws_region" {}
 variable "teste" {
-  default="teste123"
+  default="teste123456"
 }
 variable "cidr_block" {}
 variable "subnet_dev" {}
