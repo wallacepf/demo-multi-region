@@ -1,4 +1,5 @@
 variable "aws_region" {}
+variable "teste" {}
 variable "cidr_block" {}
 variable "subnet_dev" {}
 variable "subnet_staging" {}
