@@ -86,6 +86,6 @@ module "demo-ec2-module" {
   inst_common_tags = var.inst_common_tags
 }
 
-resource "null_resource" "demo" {
-
- }
+//resource "null_resource" "demo" {
+//
+// }
